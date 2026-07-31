@@ -1,15 +1,16 @@
-import { useAdmin } from "@/lib/admin-store";
+import { useBrandSettings } from "@/lib/data";
 
 const LOCAL_LOGO = "/images/logo/logo.png";
+const DEFAULT_BRAND_NAME = "RAHIQ Parfums | رحيق";
 
 export function BrandLogo({ className = "h-10 w-auto" }: { className?: string }) {
-  const { state } = useAdmin();
-  const src = state.brand.logoUrl || LOCAL_LOGO;
+  const { data } = useBrandSettings();
+  const src = data?.logo_url || LOCAL_LOGO;
 
   return (
     <img
       src={src}
-      alt={state.brand.brandName}
+      alt={data?.brand_name_en ?? DEFAULT_BRAND_NAME}
       className={className}
       loading="eager"
       decoding="async"
@@ -22,14 +23,14 @@ export function BrandLogo({ className = "h-10 w-auto" }: { className?: string })
  * with a single shared type size for both scripts.
  */
 export function BrandName({ className = "" }: { className?: string }) {
-  const { state } = useAdmin();
+  const { data } = useBrandSettings();
 
   return (
     <span
       dir="ltr"
       className={`whitespace-nowrap font-bold tracking-[0.1em] text-foreground ${className}`}
     >
-      {state.brand.brandName}
+      {data?.brand_name_en ?? DEFAULT_BRAND_NAME}
     </span>
   );
 }

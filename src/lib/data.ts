@@ -192,6 +192,28 @@ export function useContactSettings() {
   });
 }
 
+// ─── Brand Settings ──────────────────────────────────────────────────────────
+
+export function useBrandSettings() {
+  return useQuery({
+    queryKey: ["brand-settings"],
+    queryFn: async () => {
+      const { data } = await supabase.from("brand_settings").select("*").eq("id", 1).maybeSingle();
+      return data as {
+        logo_url: string;
+        hero_logo_url: string;
+        favicon_url: string;
+        brand_name_ar: string;
+        brand_name_en: string;
+        default_language: string;
+        hero_desc_ar: string;
+        hero_desc_en: string;
+      } | null;
+    },
+    staleTime: 60_000,
+  });
+}
+
 // ─── Delivery Pricing ─────────────────────────────────────────────────────────
 
 export function useDeliveryPricing() {
